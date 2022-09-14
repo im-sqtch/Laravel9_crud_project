@@ -13,13 +13,19 @@
         <div class="container">
             <div class="row">
 
-                @if ($errors->any())
+                {{-- @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
+                    </div>
+                @endif --}}
+
+                @if(session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
                     </div>
                 @endif
 
@@ -33,11 +39,17 @@
                                 @csrf
                                 <div class="mb-3">
                                     <label for="" class="form-label">Student Name</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Student Email</label>
-                                    <input type="text" class="form-control" name="email">
+                                    <input type="text" class="form-control" name="email" value="{{ old('email') }}">
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <input type="submit" class="btn btn-primary" value="Submit">

@@ -14,7 +14,6 @@ class StudentController extends Controller
 
     public function formdata(Request $request)
     {
-        
         $request->validate([
             'name' => 'required',
             'email' => 'required|email'
@@ -24,5 +23,7 @@ class StudentController extends Controller
         $student->name = $request->name;
         $student->email = $request->email;
         $student->save();
+
+        return redirect()->route('home')->with('success', 'Subscription successful');
     }
 }
