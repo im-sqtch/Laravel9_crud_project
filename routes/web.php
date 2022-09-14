@@ -17,3 +17,9 @@ use App\Http\Controllers\StudentController;
 Route::get('/', [StudentController::class, 'home'])->name('home');
 
 Route::post('formdata', [StudentController::class, 'formdata'])->name('formdata');
+
+Route::get('edit/{id}', [StudentController::class, 'edit'])->name('edit');
+
+Route::post('update/{id}', [StudentController::class, 'update'])->name('update');
+
+Route::get('delete/{id}', [StudentController::class, 'delete'])->name('delete');

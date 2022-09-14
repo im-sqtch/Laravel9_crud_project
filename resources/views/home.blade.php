@@ -84,8 +84,8 @@
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>
-                                                <a href="" class="btn btn-info">Edit</a>
-                                            <a href="" class="btn btn-danger" onClick="return confirm('Are you sure you want to delete this student?')">Delete</a>
+                                                <a href="{{ route('edit', $item->id) }}" class="btn btn-info">Edit</a>
+                                                <a href="{{ route('delete', $item->id) }}" class="btn btn-danger" onClick="return confirm('Are you sure you want to delete this student?')">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
