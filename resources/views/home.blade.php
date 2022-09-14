@@ -40,7 +40,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Profile Photo</label>
                                     <input type="file" name="photo">
-                                    @error('name')
+                                    @error('photo')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -65,6 +65,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
@@ -95,8 +96,8 @@
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>
-                                                <a href="{{ route('edit', $item->id) }}" class="btn btn-info">Edit</a>
-                                                <a href="{{ route('delete', $item->id) }}" class="btn btn-danger" onClick="return confirm('Are you sure you want to delete this student?')">Delete</a>
+                                                <a href="{{ route('edit',$item->id) }}" class="btn btn-info">Edit</a>
+                                                <a href="{{ route('delete',$item->id) }}" class="btn btn-danger" onClick="return confirm('Are you sure you want to delete this student?')">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -105,6 +106,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -114,3 +116,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
 </html>
+

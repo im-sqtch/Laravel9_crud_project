@@ -16,7 +16,7 @@ class StudentController extends Controller
     public function formdata(Request $request)
     {
         $request->validate([
-            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required',
             'email' => 'required|email'
         ]);
@@ -24,7 +24,7 @@ class StudentController extends Controller
         $extension = $request->file('photo')->extension();
         $final_name = date('YmdHis').'.'.$extension;
 
-        $request->file('photo')->move(public_path('uploads/'), $final_name);
+        $request->file('photo')->move(public_path('uploads/'),$final_name);
 
         //dd($final_name);
 
@@ -34,34 +34,61 @@ class StudentController extends Controller
         $student->email = $request->email;
         $student->save();
 
-        return redirect()->route('home')->with('success', 'Subscription successful');
+        return redirect()->route('home')->with('success', 'Subscription successful.');
     }
 
     public function edit($id)
     {
-        $single_student = Student::where('id', $id)->first();
+        $single_student = Student::where('id',$id)->first();
         return view('edit', compact('single_student'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
+        $student = Student::where('id',$id)->first();
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email'
         ]);
 
-        $student = Student::where('id', $id)->first();
+        if($request->hasFile('photo'))
+        {
+            $request->validate([
+                'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+
+            if(file_exists(public_path('uploads/'.$student->photo)) AND !empty($student->photo))
+            {
+                unlink(public_path('uploads/'.$student->photo));
+            }
+
+            $extension = $request->file('photo')->extension();
+            $final_name = date('YmdHis').'.'.$extension;
+
+            $request->file('photo')->move(public_path('uploads/'),$final_name);
+
+            $student->photo = $final_name;
+        }
+
         $student->name = $request->name;
         $student->email = $request->email;
         $student->update();
 
-        return redirect()->route('home')->with('success', 'Update successful');
+        return redirect()->route('home')->with('success', 'Update successful.');
     }
 
     public function delete($id)
     {
-        $student = Student::where('id', $id)->first();
+        $student = Student::where('id',$id)->first();
+
+        if(file_exists(public_path('uploads/'.$student->photo)) AND !empty($student->photo))
+            {
+                unlink(public_path('uploads/'.$student->photo));
+            }
+
         $student->delete();
-        return redirect()->back()->with('success', 'Delete successful');
+
+        return redirect()->back()->with('success','Delete successful.');
     }
 }
