@@ -35,8 +35,15 @@
                             Add Student
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('formdata') }}" method="post">
+                            <form action="{{ route('formdata') }}" method="post" enctype="multipart/form-data">
                                 @csrf
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Profile Photo</label>
+                                    <input type="file" name="photo">
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Student Name</label>
                                     <input type="text" class="form-control" name="name" value="{{ old('name') }}">
@@ -68,8 +75,9 @@
                                 <thead>
                                   <tr>
                                     <th scope="col">Serial</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Last</th>
+                                    <th>Photo</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
                                     <th scope="col">Action</th>
                                   </tr>
                                 </thead>
@@ -81,6 +89,9 @@
                                             <th scope="row">
                                                 {{ $i }}
                                             </th>
+                                            <td>
+                                                <img src="{{ asset('uploads/'.$item->photo) }}" alt="" style="width:200px;">
+                                            </td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>

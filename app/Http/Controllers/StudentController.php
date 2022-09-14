@@ -16,11 +16,20 @@ class StudentController extends Controller
     public function formdata(Request $request)
     {
         $request->validate([
+            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required',
             'email' => 'required|email'
         ]);
 
+        $extension = $request->file('photo')->extension();
+        $final_name = date('YmdHis').'.'.$extension;
+
+        $request->file('photo')->move(public_path('uploads/'), $final_name);
+
+        //dd($final_name);
+
         $student = new Student();
+        $student->photo = $final_name;
         $student->name = $request->name;
         $student->email = $request->email;
         $student->save();
