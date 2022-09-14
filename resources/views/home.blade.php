@@ -12,13 +12,25 @@
     <div class="main_content pt-3">
         <div class="container">
             <div class="row">
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
                             Add Student
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
+                            <form action="{{ route('formdata') }}" method="post">
+                                @csrf
                                 <div class="mb-3">
                                     <label for="" class="form-label">Student Name</label>
                                     <input type="text" class="form-control" name="name">

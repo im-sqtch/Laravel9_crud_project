@@ -15,3 +15,5 @@ use App\Http\Controllers\StudentController;
 */
 
 Route::get('/', [StudentController::class, 'home'])->name('home');
+
+Route::post('formdata', [StudentController::class, 'formdata'])->name('formdata');
